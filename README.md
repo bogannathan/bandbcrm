@@ -1,1 +1,1 @@
-This app is a project I am building with Kaylea. 
+This app is a project being built by Kaylea Britton (kbbritton217) and Nathan Bogan (bogannathan) to display our skill set. If you want to clone the repo, all you need to do is add your firebase details and you can test it out.  
