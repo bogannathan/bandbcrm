@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, Button } from 'react-native';
 import Auth from './src/screens/Auth';
 import * as firebase from 'firebase';
 import "firebase/firestore";
@@ -13,16 +13,25 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      user: null
+      user: null,
+      checkedForUser: false
     }
   }
 
   componentDidMount = async () => {
     await firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({ user })
-      } 
+        this.setState({user})
+        console.log(user)
+      }
+      this.setState({checkedForUser: true})
     })
+  }
+
+  logout = () => {
+    console.log('pressed')
+    firebase.auth().signOut()
+    this.setState({user: null})
   }
 
   addData = () => {
@@ -42,24 +51,35 @@ export default class App extends React.Component {
 
   protectedViews = () => {
     //in the return, must return one element: cannot return 3 sibling texts. so wrap it in a parent view.
-    //obnoxiously, this requires us to flex: 1 the views, so that they fill the mainView in our main render 
-    if (this.state.user) {
-      return (
-        <View style={{flex: 1}}><Text>This is the main page for authorized users</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Button onPress={() => this.addData()} title='Add data'></Button></View>
-      )
+    //obnoxiously, this requires us to flex: 1 the views, so that they fill the mainView in our main render
+    if (this.state.checkedForUser) {
+      if (this.state.user) {
+        return (
+          <View style={{flex: 1}}><Text>This is the main page for authorized users</Text>
+          <Text>Shake your phone to open the developer menu.</Text>
+          <Button onPress={() => this.addData()} title='Add data'></Button></View>
+        )
+      } else {
+        return (
+          <Auth />
+        )
+      }
     } else {
       return (
-        <Auth />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator
+            size="large"
+            color='grey'
+          />
+        </View>
       )
-    }
+    } 
   }
 
   render = () => {
     return (
       <View style={styles.container}>
-        <NavBar />
+        <NavBar clickLogout={this.logout} />
         <View style={styles.mainView} >
           {this.protectedViews()}
         </View>

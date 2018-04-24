@@ -10,7 +10,9 @@ export default class NavBar extends React.Component {
                     <Text style={{fontSize: 30, color: 'blue', textAlign: 'center'}}>
                         bANDbCRM
                     </Text>
-                    <Text style={{fontSize: 20, textAlign: 'right'}}>Log out</Text>
+                    <TouchableHighlight onPress={() => this.props.clickLogout()}>
+                        <Text style={{fontSize: 20, textAlign: 'right'}}>Log out</Text>
+                    </TouchableHighlight>
             </View>
         )
     }

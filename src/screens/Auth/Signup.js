@@ -7,19 +7,19 @@ export default class Signup extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
+            email: '',
             password: ''
         }
     }
 
     signup = () => {
-        console.log('signup pressed')
+        this.props.signup(this.state.email.toLowerCase(), this.state.password)
     }
 
     render = () => {
         return (
             <View>
-                <TextInput onChangeText = {(text) => this.setState({username: text})} style={styles.textInput} placeholder='username' />
+                <TextInput onChangeText = {(text) => this.setState({email: text})} style={styles.textInput} placeholder='email' />
                 <TextInput onChangeText = {(text) => this.setState({password: text})} style={styles.textInput} placeholder='password' secureTextEntry />
                 <TouchableHighlight
                     style={{backgroundColor: 'grey'}} 
