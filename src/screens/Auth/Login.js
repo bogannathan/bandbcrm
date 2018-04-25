@@ -18,19 +18,23 @@ export default class Login extends React.Component {
 
     render = () => {
         return (
-            <View>
-                <TextInput onChangeText = {(text) => this.setState({email: text})} style={styles.textInput} placeholder='email' />
-                <TextInput onChangeText = {(text) => this.setState({password: text})} style={styles.textInput} placeholder='password' secureTextEntry />
-                <TouchableHighlight 
-                    style={{backgroundColor: 'orange'}}
-                    onPress = {() => this.login()}>
-                    <Text style={styles.btnText}>Login</Text>
-                </TouchableHighlight>
-                <TouchableHighlight 
-                    style={{backgroundColor: 'purple'}}
-                    onPress = {() => this.props.loginActive(false)}>
-                    <Text style={styles.btnText}>Go to signup</Text>
-                </TouchableHighlight>
+            <View style={styles.textBtnView}>
+                <View style={{flex: 1}} />
+                <View style={{flex: 8}}>
+                    <TextInput onChangeText = {(text) => this.setState({email: text})} style={styles.textInput} placeholder='email' />
+                    <TextInput onChangeText = {(text) => this.setState({password: text})} style={styles.textInput} placeholder='password' secureTextEntry />
+                    <TouchableHighlight 
+                        style={{backgroundColor: 'orange', marginBottom: 10}}
+                        onPress = {() => this.login()}>
+                        <Text style={styles.btnText}>Login</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight 
+                        style={{backgroundColor: 'purple'}}
+                        onPress = {() => this.props.loginActive(false)}>
+                        <Text style={styles.btnText}>Go to signup</Text>
+                    </TouchableHighlight>
+                </View>
+                <View style={{flex: 1}} />
             </View>
         )
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import Login from './Login';
 import Signup from './Signup';
@@ -10,7 +10,8 @@ export default class Auth extends React.Component {
     constructor(props) {
         super(props) 
         this.state = { 
-            loginActive: true
+            loginActive: true,
+            loading: false
         }
     }
 
@@ -19,6 +20,7 @@ export default class Auth extends React.Component {
     }
 
     signup = (email, password) => {
+        this.setState({loading: true})
         firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(res => {
             alert('Your account was successfully created!')
@@ -41,9 +43,11 @@ export default class Auth extends React.Component {
                 }
             }
         })
+        this.setState({loading: false})
     }
 
     login = (email, password) => {
+        this.setState({loading: true})
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then(res => {
         })
@@ -68,6 +72,7 @@ export default class Auth extends React.Component {
             }
         }
         })
+        this.setState({loading: false})
     }
 
     render = () => {
@@ -82,7 +87,11 @@ export default class Auth extends React.Component {
                     <Signup signup={this.signup} loginActive={this.switchTab} />
                 </View>
                 }
-                <View style={{flex: 3}} />
+                {this.state.loading &&
+                    <View pointerEvents='none' style={styles.loading}>
+                        <ActivityIndicator size='large' />
+                    </View>
+                }
             </View>
         )
     }

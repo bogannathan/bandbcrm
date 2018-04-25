@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import "firebase/firestore";
 import firebaseConfig from './firebaseConfig';
 import NavBar from './src/components/NavBar';
+import AddCustomer from './src/screens/Customer/addCustomer';
 
 firebase.initializeApp(firebaseConfig)
 let db = firebase.firestore()
@@ -55,9 +56,10 @@ export default class App extends React.Component {
     if (this.state.checkedForUser) {
       if (this.state.user) {
         return (
-          <View style={{flex: 1}}><Text>This is the main page for authorized users</Text>
-          <Text>Shake your phone to open the developer menu.</Text>
-          <Button onPress={() => this.addData()} title='Add data'></Button></View>
+          <AddCustomer />
+          // <View style={{flex: 1}}><Text>This is the main page for authorized users</Text>
+          // <Text>Shake your phone to open the developer menu.</Text>
+          // <Button onPress={() => this.addData()} title='Add data'></Button></View>
         )
       } else {
         return (
@@ -66,7 +68,7 @@ export default class App extends React.Component {
       }
     } else {
       return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1}}>
           <ActivityIndicator
             size="large"
             color='grey'
@@ -80,9 +82,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <NavBar clickLogout={this.logout} />
-        <View style={styles.mainView} >
           {this.protectedViews()}
-        </View>
       </View>
     );
   }
